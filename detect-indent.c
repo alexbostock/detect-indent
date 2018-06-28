@@ -22,7 +22,7 @@ int main(int argc, char **argv)
         int line_num = 0;
         int num_lines_with_tabs = 0;
 
-        unsigned int num_spaces[1000];
+        unsigned short int num_spaces[1000];
         // We will process at most 1000 lines
 
         for (int i = 0; i < 1000; i++)
@@ -34,7 +34,7 @@ int main(int argc, char **argv)
 			switch (line[i]) {
 				case '\0':
 				case '\n':
-				        continue;
+					goto next_line;
 
 			        case '\t':
 			                num_spaces[line_num] = -1;
@@ -46,9 +46,11 @@ int main(int argc, char **argv)
 		                        break;
 
 	                        default:
-		                        continue;
+					goto next_line;
 			}
 		}
+	next_line:
+		continue;
 	}
 
 	int num_indented_lines = 0;
@@ -62,7 +64,7 @@ int main(int argc, char **argv)
 		printf("0");
 	} else {
 		// Assume the indent size is between 2 and 8
-		// Find the Highest one which fits >50% of lines
+		// Find the Highest one which fits >80% of lines
 
 		for (int i = 8; i >= 2; i--) {
 			int num_ok = 0;
@@ -72,9 +74,9 @@ int main(int argc, char **argv)
 				}
 			}
 
-			if (num_ok > num_indented_lines / 2) {
+			if (num_ok > num_indented_lines * 0.8) {
 				printf("%d", i);
-				break;
+				return 0;
 			}
 		}
 
