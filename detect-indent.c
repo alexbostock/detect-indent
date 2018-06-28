@@ -19,13 +19,13 @@ int main(int argc, char **argv)
 	char line[80];
 	// We will process at most 79 characters of each line
 
-        int line_num = 0;
-        int num_lines_with_tabs = 0;
+	int line_num = 0;
+	int num_lines_with_tabs = 0;
 
-        unsigned short int num_spaces[1000];
-        // We will process at most 1000 lines
+	unsigned short int num_spaces[1000];
+	// We will process at most 1000 lines
 
-        for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < 1000; i++)
 		num_spaces[i] = 0;
 
 	for (line_num = 0; line_num < 1000 && !feof(fp); line_num++) {
@@ -36,16 +36,16 @@ int main(int argc, char **argv)
 				case '\n':
 					goto next_line;
 
-			        case '\t':
-			                num_spaces[line_num] = -1;
-			                num_lines_with_tabs++;
-			                break;
+				case '\t':
+					num_spaces[line_num] = -1;
+					num_lines_with_tabs++;
+					break;
 
-		                case ' ':
-		                        num_spaces[line_num]++;
-		                        break;
+				case ' ':
+					num_spaces[line_num]++;
+					break;
 
-	                        default:
+				default:
 					goto next_line;
 			}
 		}
@@ -54,11 +54,11 @@ int main(int argc, char **argv)
 	}
 
 	int num_indented_lines = 0;
-        for (int i = 0; i < line_num; i++) {
-	        if (num_spaces[i] != 0) {
-		        num_indented_lines++;
-	        }
-        }
+	for (int i = 0; i < line_num; i++) {
+		if (num_spaces[i] != 0) {
+			num_indented_lines++;
+		}
+	}
 
 	if (num_lines_with_tabs > num_indented_lines / 2) {
 		printf("0");
